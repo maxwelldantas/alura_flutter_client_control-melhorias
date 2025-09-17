@@ -1,13 +1,18 @@
 import 'package:client_control/main.dart' as app;
+import 'package:client_control/models/clients.dart';
+import 'package:client_control/models/types.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('Integration Test', (tester) async {
-    app.main();
+    final providerKey = GlobalKey();
+
+    app.main([], providerKey);
 
     await tester.pumpAndSettle();
 
@@ -40,7 +45,7 @@ void main() {
     await tester.tap(find.byType(FloatingActionButton));
     await tester.pumpAndSettle();
     expect(find.byType(AlertDialog), findsOneWidget);
-    await tester.enterText(find.byType(TextFormField), 'Ferro');
+    await tester.enterText(find.byType(TextFormField), 'Silver');
 
     await tester.tap(find.text('Selecionar icone'));
     await tester.pumpAndSettle();
@@ -50,8 +55,21 @@ void main() {
 
     await tester.tap(find.text('Salvar'));
     await tester.pumpAndSettle();
-    expect(find.text('Ferro'), findsOneWidget);
+    expect(find.text('Silver'), findsOneWidget);
     expect(find.byIcon(Icons.card_giftcard), findsOneWidget);
+
+    expect(
+        Provider.of<Types>(providerKey.currentContext!, listen: false)
+            .types
+            .last
+            .name,
+        'Silver');
+    expect(
+        Provider.of<Types>(providerKey.currentContext!, listen: false)
+            .types
+            .last
+            .icon,
+        Icons.card_giftcard);
 
     // Testando novo Cliente
     await tester.tap(find.byIcon(Icons.menu));
@@ -70,10 +88,27 @@ void main() {
     await tester.tap(find.byIcon(Icons.arrow_downward));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Ferro').last);
+    await tester.tap(find.text('Silver').last);
     await tester.pumpAndSettle();
 
     await tester.tap(find.text('Salvar'));
     await tester.pumpAndSettle();
+
+    // Verificando se o Cliente apareceu devidamente
+    expect(find.text('MaxBot (Silver)'), findsOneWidget);
+    expect(find.byIcon(Icons.card_giftcard), findsOneWidget);
+
+    expect(
+        Provider.of<Clients>(providerKey.currentContext!, listen: false)
+            .clients
+            .last
+            .name,
+        'MaxBot');
+    expect(
+        Provider.of<Clients>(providerKey.currentContext!, listen: false)
+            .clients
+            .last
+            .email,
+        'maxbot@bot.com.br');
   });
 }

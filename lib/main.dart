@@ -2,11 +2,12 @@ import 'package:client_control/models/clients.dart';
 import 'package:client_control/pages/client_types_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'models/client_type.dart';
 import 'models/types.dart';
 import 'pages/clients_page.dart';
 
-void main() {
+void main(List<String> list, Key providerKey) {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => Clients(clients: [])),
     ChangeNotifierProvider(create: (context) => Types(types: [
@@ -15,8 +16,7 @@ void main() {
       ClientType(name: 'Titanium', icon: Icons.credit_score),
       ClientType(name: 'Diamond', icon: Icons.diamond),
     ]))
-  ],
-  child: const MyApp()));
+  ], child: MyApp(key: providerKey)));
 }
 
 class MyApp extends StatelessWidget {
