@@ -52,5 +52,28 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Ferro'), findsOneWidget);
     expect(find.byIcon(Icons.card_giftcard), findsOneWidget);
+
+    // Testando novo Cliente
+    await tester.tap(find.byIcon(Icons.menu));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Gerenciar clientes'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byType(FloatingActionButton));
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.byKey(const Key('NameKey1')), 'MaxBot');
+    await tester.enterText(
+        find.byKey(const Key('EmailKey1')), 'maxbot@bot.com.br');
+
+    await tester.tap(find.byIcon(Icons.arrow_downward));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Ferro').last);
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Salvar'));
+    await tester.pumpAndSettle();
   });
 }

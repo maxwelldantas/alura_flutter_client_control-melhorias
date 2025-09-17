@@ -1,5 +1,5 @@
-import 'package:client_control/models/client_type.dart';
 import 'package:client_control/models/client.dart';
+import 'package:client_control/models/client_type.dart';
 import 'package:client_control/models/clients.dart';
 import 'package:client_control/models/types.dart';
 import 'package:flutter/material.dart';
@@ -74,7 +74,8 @@ class _ClientsPageState extends State<ClientsPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         TextFormField(
-                          controller: nomeInput,
+                      key: Key('NameKey1'),
+                      controller: nomeInput,
                           decoration: const InputDecoration(
                             labelText: 'Nome',
                             icon: Icon(Icons.account_box),
@@ -82,7 +83,8 @@ class _ClientsPageState extends State<ClientsPage> {
                         ),
                         const Padding(padding: EdgeInsets.all(5)),
                         TextFormField(
-                          controller: emailInput,
+                      key: Key('EmailKey1'),
+                      controller: emailInput,
                           decoration: const InputDecoration(
                             labelText: 'Email',
                             icon: Icon(Icons.email),
